@@ -1,4 +1,4 @@
-CC = cc -Werror -Wall -Wextra -fsanitize=address -g3
+CC = cc -Wall -Wextra -Werror
 NAME = pipex
 BONUS = pipex_bonus
 RM = rm -rf

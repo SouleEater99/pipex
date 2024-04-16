@@ -18,6 +18,7 @@ char	*ft_get_cmd(char *cmd)
 	int		j;
 	char	*new_cmd;
 
+	i = 0;
 	while (*cmd == ' ')
 		cmd++;
 	if (ft_check_path(cmd))
