@@ -12,6 +12,23 @@
 
 #include "../include/pipex.h"
 
+int		ft_strcmp(char *s1, char *s2)
+{
+	if (s1 && s2)
+	{
+		while (*s1 && *s2 && *s1 == *s2)
+		{
+			s1++;
+			s2++;
+		}
+	}
+	else
+		return (0);
+	if (*s1 == '\n')
+		s1++;
+	return (*s1 - *s2);
+}
+
 void	ft_here_doc(char **av, t_pipe *ps)
 {
 	char	*line;
@@ -21,7 +38,7 @@ void	ft_here_doc(char **av, t_pipe *ps)
 		ft_exit(ps, 1);
 	ft_putstr_fd("Here_Doc Pipe --> ", 1);
 	line = get_next_line(0);
-	while (line && ft_strncmp(line, av[2], ft_strlen(av[2])) != 0)
+	while (line && ft_strcmp(line, av[2]) != 0)
 	{
 		write(pip[1], line, ft_strlen(line));
 		free(line);
