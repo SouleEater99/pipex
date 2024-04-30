@@ -61,7 +61,7 @@ int	main(int ac, char **av, char **envp)
 	ps = NULL;
 	if (ac >= 5)
 	{
-		if (!ft_strnstr(av[1], "here_doc", 9))
+		if (ft_strcmp(av[1], "here_doc") != 0)
 		{
 			ps = ft_init_ps(ac, av, ps);
 			ps->i = 2;
