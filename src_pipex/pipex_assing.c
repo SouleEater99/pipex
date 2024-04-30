@@ -14,8 +14,8 @@
 
 void	ft_assign(char *cmd, char **envp, t_pipe *ps)
 {
-	ps->path = ft_get_path(envp, cmd);
 	ps->cmd = ft_get_cmd(cmd);
+	ps->path = ft_get_path(envp, ps->cmd);
 	ps->arg = ft_split(cmd, ' ');
 	if (!ps->path)
 	{
