@@ -58,7 +58,6 @@ void		ft_exit(t_pipe *ps, int status);
 void		ft_print_error(char *cmd);
 void		ft_assign(char *cmd, char **envp, t_pipe *ps);
 t_pipe		*ft_init_ps(int ac, char **av, t_pipe *ps);
-void		ft_unlink_file2(t_pipe *ps, char **envp);
 int			ft_wexitstatus(int status);
 int			ft_strcmp(char *s1, char *s2);
 

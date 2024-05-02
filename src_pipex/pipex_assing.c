@@ -43,21 +43,6 @@ t_pipe	*ft_init_ps(int ac, char **av, t_pipe *ps)
 	return (ps);
 }
 
-void	ft_unlink_file2(t_pipe *ps, char **envp)
-{
-	int		i;
-	char	*f_path;
-
-	i = 0;
-	f_path = NULL;
-	while (envp[i] && !f_path)
-		f_path = ft_strnstr(envp[i++], "PWD=", 4);
-	f_path = ft_strjoin_path(f_path + 4, ps->file2, '/');
-	if (access(f_path, F_OK) == 0)
-		unlink(ps->file2);
-	free(f_path);
-}
-
 int	ft_wexitstatus(int status)
 {
 	status = status >> 8;
