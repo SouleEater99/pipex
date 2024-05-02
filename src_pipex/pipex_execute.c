@@ -53,12 +53,13 @@ void	ft_last_cmd(t_pipe *ps, int *pip, char **envp)
 {
 	int	fd2;
 
-	if (!ps->limiter)
-		ft_unlink_file2(ps, envp);
 	ft_assign(ps->av[ps->i], envp, ps);
 	close(pip[0]);
 	close(pip[1]);
-	fd2 = open(ps->file2, O_CREAT | O_RDWR | O_APPEND, 0777);
+	if (!ps->limiter)
+		fd2 = open(ps->file2, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	else
+		fd2 = open(ps->file2, O_CREAT | O_RDWR | O_APPEND, 0644);
 	if (fd2 == -1)
 	{
 		write(2, ps->file2, ft_strlen(ps->file2));

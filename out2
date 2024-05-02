@@ -1,0 +1,12 @@
+total 68
+-rw-r--r-- 1 souleeater souleeater  1099 May  2 17:30 Makefile
+drwxr-xr-x 2 souleeater souleeater  4096 May  2 18:09 get_next_line
+-rw-r--r-- 1 souleeater souleeater     0 May  2 17:46 in
+drwxr-xr-x 2 souleeater souleeater  4096 May  2 17:30 include
+drwxr-xr-x 2 souleeater souleeater  4096 May  2 18:09 lib_ft
+-r--r--r-- 1 souleeater souleeater     0 May  2 17:49 out
+-rw-r--r-- 1 souleeater souleeater     0 May  2 18:26 out2
+-rwxr-xr-x 1 souleeater souleeater 22048 May  2 18:23 pipex
+-rwxr-xr-x 1 souleeater souleeater 22664 May  2 18:23 pipex_bonus
+-rw-r--r-- 1 souleeater souleeater     0 May  2 18:19 s
+drwxr-xr-x 2 souleeater souleeater  4096 May  2 18:23 src_pipex

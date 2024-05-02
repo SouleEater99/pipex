@@ -46,7 +46,8 @@ void	ft_here_doc(char **av, t_pipe *ps)
 		line = get_next_line(0);
 	}
 	close(pip[1]);
-	free(line);
+	if (line)
+		free(line);
 	if (dup2(pip[0], STDIN_FILENO) == -1)
 		ft_dup_error(ps, pip[0], -1);
 	close(pip[0]);
