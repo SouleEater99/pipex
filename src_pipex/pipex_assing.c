@@ -12,16 +12,42 @@
 
 #include "../include/pipex.h"
 
+void	ft_check_sanitize(t_pipe *ps)
+{
+	char	*path;
+	int		i;
+
+	path = ps->path;
+	i = 0;
+	while (path[i] && path[i] != ' ' && path[i] != '	')
+	{
+		if (path[i] == '\\' && path[i + 1] && path[i + 1] == '\\')
+		{
+			ft_putstr_fd("no such file or directory\n", 2);
+			ft_exit(ps, 127);
+		}
+		if (path[i] == '\\' && path[i + 1] && path[i + 1] != '\\')
+			path[i] = '/';
+		i++;
+	}
+	if (access(path, X_OK) != 0)
+	{
+		perror(ps->cmd);
+		ft_exit(ps, 126);
+	}
+}
+
 void	ft_assign(char *cmd, char **envp, t_pipe *ps)
 {
 	ps->cmd = ft_get_cmd(cmd);
-	ps->path = ft_get_path(envp, ps->cmd);
+	ps->path = ft_get_path(envp, cmd, ps);
 	ps->arg = ft_split(cmd, ' ');
 	if (!ps->path)
 	{
 		ft_print_error(ps->cmd);
 		ft_exit(ps, 127);
 	}
+	ft_check_sanitize(ps);
 }
 
 t_pipe	*ft_init_ps(int ac, char **av, t_pipe *ps)

@@ -1,4 +1,4 @@
-CC = cc -Wall -Wextra -Werror
+CC = cc -Wall -Wextra -Werror 
 NAME = pipex
 BONUS = pipex_bonus
 RM = rm -rf

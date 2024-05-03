@@ -12,6 +12,28 @@
 
 #include "../include/pipex.h"
 
+
+char	*ft_strdup_path(char *str)
+{
+	size_t	i;
+	char	*dup;
+
+	i = 0;
+	while (str[i] && str[i] != ' ' && str[i] != '	')
+		i++;
+	dup = (char *)malloc(i + 1);
+	if (dup == NULL)
+		return (NULL);
+	i = 0;
+	while (str[i] && str[i] != ' ' && str[i] != '	')
+	{
+		dup[i] = str[i];
+		i++;
+	}
+	dup[i] = '\0';
+	return (dup);
+}
+
 char	*ft_get_cmd(char *cmd)
 {
 	int		i;
@@ -19,31 +41,32 @@ char	*ft_get_cmd(char *cmd)
 	char	*new_cmd;
 
 	i = 0;
-	while (*cmd == ' ')
+
+	while (*cmd == ' ' || *cmd == '	')
 		cmd++;
 	if (ft_check_path(cmd))
 		return (ft_strdup(cmd));
-	while (cmd[i] && cmd[i] != ' ')
+	while (cmd[i] && cmd[i] != ' ' && cmd[i] != '	')
 		if (cmd[i++] == '/')
 			j = i;
-	if ((ft_strlen_delimiter(cmd + j, ' ') + 1) == 1)
+	if ((ft_strlen_delimiter(cmd + j) + 1) == 1)
 		return (NULL);
-	new_cmd = malloc(ft_strlen_delimiter(cmd + j, ' ') + 1);
+	new_cmd = malloc(ft_strlen_delimiter(cmd + j) + 1);
 	if (!new_cmd)
 		return (NULL);
 	i = 0;
-	while (cmd[j] && cmd[j] != ' ')
+	while (cmd[j] && cmd[j] != ' ' && cmd[j] != '	')
 		new_cmd[i++] = cmd[j++];
 	new_cmd[i] = '\0';
 	return (new_cmd);
 }
 
-size_t	ft_strlen_delimiter(const char *str, char c)
+size_t	ft_strlen_delimiter(const char *str)
 {
 	size_t	i;
 
 	i = 0;
-	while (str[i] && str[i] != c)
+	while (str[i] && str[i] != ' ' && str[i] != '	')
 		i++;
 	return (i);
 }
@@ -57,7 +80,7 @@ char	*ft_strjoin_path(char const *s1, char const *s2, char c)
 	if (!s1 || !s2)
 		return (NULL);
 	s1_len = ft_strlen(s1) + 1;
-	d = (char *)malloc(s1_len + ft_strlen_delimiter(s2, ' ') + 1);
+	d = (char *)malloc(s1_len + ft_strlen_delimiter(s2) + 1);
 	if (d == NULL)
 		return (NULL);
 	i = -1;
@@ -65,7 +88,7 @@ char	*ft_strjoin_path(char const *s1, char const *s2, char c)
 		d[i] = s1[i];
 	d[i] = c;
 	i = 0;
-	while (s2[i] && s2[i] != ' ')
+	while (s2[i] && s2[i] != ' ' && s2[i] != '	')
 	{
 		d[s1_len + i] = s2[i];
 		i++;
@@ -79,37 +102,40 @@ int	ft_check_path(char *cmd)
 	int	i;
 
 	i = 0;
-	while (cmd[i] == ' ')
+	while (cmd[i] == ' ' || cmd[i] == '	')
 		i++;
-	while (cmd[i] && cmd[i] != ' ')
+	while (cmd[i] && cmd[i] != ' ' && cmd[i] != '	')
 		if (cmd[i++] == '/')
 			return (0);
 	return (1);
 }
 
-char	*ft_get_path(char **envp, char *cmd)
+char	*ft_get_path(char **envp, char *cmd, t_pipe *ps)
 {
 	int		i;
-	char	*path;
 	char	**tab;
 
-	while (cmd && *cmd == ' ')
+	while (cmd && (*cmd == ' ' || *cmd == '	'))
 		cmd++;
 	i = 0;
 	if (ft_check_path(cmd) == 0)
-		return (ft_strdup(cmd));
+		return (ft_strdup_path(cmd));
 	while (envp[i] && (ft_strnstr(envp[i], "PATH=", 6) == NULL))
 		i++;
 	if (envp[i] == NULL)
-		return (NULL);
+	{
+		ps->path = ft_strjoin("./", ps->cmd);
+		return (ps->path);
+	
+	}
 	tab = ft_split(envp[i] + 6, ':');
 	i = 0;
 	while (tab[i])
 	{
-		path = ft_strjoin_path(tab[i], cmd, '/');
-		if (access(path, X_OK) == 0)
-			return (ft_free_tab(tab), path);
-		free(path);
+		ps->path = ft_strjoin_path(tab[i], ps->cmd, '/');
+		if (access(ps->path, X_OK) == 0)
+			return (ft_free_tab(tab), ps->path);
+		free(ps->path);
 		i++;
 	}
 	return (ft_free_tab(tab), NULL);
