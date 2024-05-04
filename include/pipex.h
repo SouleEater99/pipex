@@ -47,7 +47,7 @@ void		ft_middle_cmd(t_pipe *ps, int *pip, char **envp);
 void		ft_last_cmd(t_pipe *ps, int *pip, char **envp);
 void		ft_child_proc(char **envp, t_pipe *ps, int *pip);
 int			ft_execute(int ac, char **envp, t_pipe *ps);
-char		*ft_get_cmd(char *cmd);
+char		*ft_get_cmd(char *cmd, t_pipe *ps);
 size_t		ft_strlen_delimiter(const char *str);
 char		*ft_strjoin_path(char const *s1, char const *s2, char c);
 int			ft_check_path(char *cmd);

@@ -63,7 +63,7 @@ void	ft_check_sanitize(t_pipe *ps)
 
 void	ft_assign(char *cmd, char **envp, t_pipe *ps)
 {
-	ps->cmd = ft_get_cmd(cmd);
+	ps->cmd = ft_get_cmd(cmd, ps);
 	ps->path = ft_get_path(envp, cmd, ps);
 	ps->arg = ft_split(cmd, ' ');
 	if (!ps->path)

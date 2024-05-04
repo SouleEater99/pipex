@@ -12,7 +12,7 @@
 
 #include "../include/pipex.h"
 
-char	*ft_get_cmd(char *cmd)
+char	*ft_get_cmd(char *cmd, t_pipe *ps)
 {
 	int		i;
 	int		j;
@@ -21,6 +21,8 @@ char	*ft_get_cmd(char *cmd)
 	i = 0;
 	while (*cmd == ' ' || *cmd == '	')
 		cmd++;
+	if (*cmd == '\0')
+		return (ft_putstr_fd("command not found\n", 2), ft_exit(ps, 127), cmd);
 	if (ft_check_path(cmd))
 		return (ft_strdup(cmd));
 	while (cmd[i] && cmd[i] != ' ' && cmd[i] != '	')
