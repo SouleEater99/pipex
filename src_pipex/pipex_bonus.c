@@ -58,7 +58,7 @@ int	main(int ac, char **av, char **envp)
 	t_pipe	*ps;
 	int		i;
 
-	i = 0; // sanitize remove it from makefile
+	i = 0;
 	ps = NULL;
 	if (ac >= 5)
 	{

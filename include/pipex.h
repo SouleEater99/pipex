@@ -60,5 +60,6 @@ void		ft_assign(char *cmd, char **envp, t_pipe *ps);
 t_pipe		*ft_init_ps(int ac, char **av, t_pipe *ps);
 int			ft_wexitstatus(int status);
 int			ft_strcmp(char *s1, char *s2);
+char		*ft_strdup_path(char *str);
 
 #endif

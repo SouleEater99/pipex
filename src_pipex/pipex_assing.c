@@ -12,30 +12,49 @@
 
 #include "../include/pipex.h"
 
+char	*ft_strdup_path(char *str)
+{
+	size_t	i;
+	char	*dup;
+
+	i = 0;
+	while (str[i] && str[i] != ' ' && str[i] != '	')
+		i++;
+	dup = (char *)malloc(i + 1);
+	if (dup == NULL)
+		return (NULL);
+	i = 0;
+	while (str[i] && str[i] != ' ' && str[i] != '	')
+	{
+		dup[i] = str[i];
+		i++;
+	}
+	dup[i] = '\0';
+	return (dup);
+}
+
 void	ft_check_sanitize(t_pipe *ps)
 {
-	char	*path;
 	int		i;
 
-	path = ps->path;
 	i = 0;
-	while (path[i] && path[i] != ' ' && path[i] != '	')
+	while (ps->path[i] && ps->path[i] != ' ' && ps->path[i] != '	')
 	{
-		if (path[i] == '\\' && path[i + 1] && path[i + 1] == '\\')
+		if (ps->path[i] == '\\' && ps->path[i + 1] && ps->path[i + 1] == '\\')
 		{
 			ft_putstr_fd("no such file or directory\n", 2);
 			ft_exit(ps, 127);
 		}
-		if (path[i] == '\\' && path[i + 1] && path[i + 1] != '\\')
-			path[i] = '/';
+		if (ps->path[i] == '\\' && ps->path[i + 1] && ps->path[i + 1] != '\\')
+			ps->path[i] = '/';
 		i++;
 	}
-	if (access(path, F_OK) != 0)
+	if (access(ps->path, F_OK) != 0)
 	{
 		perror(ps->cmd);
 		ft_exit(ps, 127);
 	}
-	if (access(path, X_OK) != 0)
+	if (access(ps->path, X_OK) != 0)
 	{
 		perror(ps->cmd);
 		ft_exit(ps, 126);

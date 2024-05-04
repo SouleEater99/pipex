@@ -12,28 +12,6 @@
 
 #include "../include/pipex.h"
 
-
-char	*ft_strdup_path(char *str)
-{
-	size_t	i;
-	char	*dup;
-
-	i = 0;
-	while (str[i] && str[i] != ' ' && str[i] != '	')
-		i++;
-	dup = (char *)malloc(i + 1);
-	if (dup == NULL)
-		return (NULL);
-	i = 0;
-	while (str[i] && str[i] != ' ' && str[i] != '	')
-	{
-		dup[i] = str[i];
-		i++;
-	}
-	dup[i] = '\0';
-	return (dup);
-}
-
 char	*ft_get_cmd(char *cmd)
 {
 	int		i;
@@ -41,7 +19,6 @@ char	*ft_get_cmd(char *cmd)
 	char	*new_cmd;
 
 	i = 0;
-
 	while (*cmd == ' ' || *cmd == '	')
 		cmd++;
 	if (ft_check_path(cmd))
@@ -126,17 +103,15 @@ char	*ft_get_path(char **envp, char *cmd, t_pipe *ps)
 	{
 		ps->path = ft_strjoin("./", ps->cmd);
 		return (ps->path);
-	
 	}
 	tab = ft_split(envp[i] + 6, ':');
-	i = 0;
-	while (tab[i])
+	i = -1;
+	while (tab[++i])
 	{
 		ps->path = ft_strjoin_path(tab[i], ps->cmd, '/');
 		if (access(ps->path, X_OK) == 0)
 			return (ft_free_tab(tab), ps->path);
 		free(ps->path);
-		i++;
 	}
 	return (ft_free_tab(tab), NULL);
 }
