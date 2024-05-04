@@ -30,6 +30,11 @@ void	ft_check_sanitize(t_pipe *ps)
 			path[i] = '/';
 		i++;
 	}
+	if (access(path, F_OK) != 0)
+	{
+		perror(ps->cmd);
+		ft_exit(ps, 127);
+	}
 	if (access(path, X_OK) != 0)
 	{
 		perror(ps->cmd);
